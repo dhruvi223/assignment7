@@ -7,12 +7,21 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../AuthContext';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 export default function ButtonAppBar() {
-    const auth = useAuth();
-    const loggedIn = auth.isloggedIn;
-    console.log(loggedIn);
+
+  const navigate = useNavigate();
+
+  const auth = useAuth();
+
+  const logout = () => {
+     auth.logout(navigate);
+  }
+
+  const loggedIn = auth.loggedIn;
+  console.log(loggedIn);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -27,29 +36,29 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <a href="/">
-            BookStore
-          </a>
+            <a href="/">
+              BookStore
+            </a>
           </Typography>
 
-{ !loggedIn && 
-    <a href="/signin">
-  <Button color="inherit">Login</Button>
-  </a>
-}
+          {!loggedIn &&
+            <a href="/signin">
+              <Button color="inherit">Login</Button>
+            </a>
+          }
 
-{loggedIn && 
-<>
-<Button color="inherit">Logout</Button>
-<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <a href="/">
-            Cart
-          </a>
-        </Typography>
-</>
+          {loggedIn &&
+            <>
+              <Button color="inherit" onClick = {logout}>Logout</Button>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <a href="/viewcart">
+                  Cart
+                </a>
+              </Typography>
+            </>
 
 
-}
+          }
 
 
         </Toolbar>

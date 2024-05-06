@@ -9,8 +9,6 @@ export const useAuth = () => useContext(AuthContext);
 
 
 export const AuthProvider = ({ children }) => {
-  const [isloggedIn, setIsloggedIn] = useState('');
-  const [username, setUsername] = useState();
 
   const login = (email, password, navigate) => {
 
@@ -28,10 +26,8 @@ export const AuthProvider = ({ children }) => {
         password : user.password
       }
       localStorage.setItem('loggedIn', JSON.stringify(loggedInuser))
+      localStorage.setItem('isloggedIn', JSON.stringify(true))
 
-
-      setIsloggedIn(true)
-      setUsername(username)
       navigate("/");
     }
     else{
@@ -43,6 +39,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   };
+
+  const loggedIn = JSON.parse(localStorage.getItem("isloggedIn"));
 
   const signup = (firstname, lastname, email, password, cpassword, navigate) => {
         if(password === cpassword){
@@ -69,9 +67,7 @@ export const AuthProvider = ({ children }) => {
                     password : hashedPassword
                   }
                   localStorage.setItem('loggedIn', JSON.stringify(loggedInuser))
-                  setIsloggedIn(true)
                   navigate('/');
-                  setUsername(firstname)
 
                 }
                 else{
@@ -85,27 +81,17 @@ export const AuthProvider = ({ children }) => {
     
 }
 
-
-
-
-  const logout = () => {
-    setIsloggedIn(false);
+  const logout = (navigate) => {
+    localStorage.setItem("isloggedIn", JSON.stringify(false))
+    localStorage.removeItem("loggedIn")
+    navigate("/signin")
   };
 
   return (
-    <AuthContext.Provider value={{ isloggedIn, login, logout, signup, username }}>
+    <AuthContext.Provider value={{ loggedIn, login, logout, signup}}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-// Custom hook to use the AuthContext
-// export const useAuth = () => {
-//   const context = React.useContext(AuthContext);
-//   if (!context) {
-//     throw new Error('useAuth must be used within an AuthProvider');
-//   }
-//   return context;
-// };
 
 export default AuthContext;

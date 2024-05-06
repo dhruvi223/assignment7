@@ -65,7 +65,7 @@ export default function Signin() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  {...register("password", { required: true, maxLength: 10, minLength: 8, pattern: passwordRegex })}
+                  {...register("password", { required: true, maxLength: 32, minLength: 8, pattern: passwordRegex })}
                 style={{ width: '350px', height: '40px' }} 
                 />
                  {errors.password && <p>{passwordMessages.weak}</p>}

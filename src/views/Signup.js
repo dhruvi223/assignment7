@@ -102,7 +102,7 @@ export default function Signup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  {...register("password", { required: true, maxLength: 10, minLength: 8, pattern: passwordRegex })}
+                  {...register("password", { required: true, maxLength: 32, minLength: 8, pattern: passwordRegex })}
                 style={{ width: '350px', height: '40px' }} 
                 />
                  {errors.password && <p>{passwordMessages.weak}</p>}
@@ -116,7 +116,7 @@ export default function Signup() {
                   type="password"
                   id="cpassword"
                   autoComplete="new-password"
-                  {...register("cpassword", { required: true, maxLength: 10, minLength: 8 })}
+                  {...register("cpassword", { required: true, maxLength: 32, minLength: 8 })}
                 style={{ width: '350px', height: '40px' }} 
                 />
               </Grid>
